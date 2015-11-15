@@ -20,7 +20,6 @@ diff-sequence@1.0.1
 ecmascript@0.1.6
 ecmascript-runtime@0.2.6
 ejson@1.0.7
-es5-shim@4.1.14
 fastclick@1.0.7
 geojson-utils@1.0.4
 hot-code-push@1.0.0
@@ -59,7 +58,7 @@ templating-tools@1.0.0
 tracker@1.0.9
 tsumina:meteor-aurelia@0.8.1
 tsumina:meteor-systemjs@0.2.0
-tsumina:meteor-typescript@0.5.2
+tsumina:meteor-typescript@0.5.3
 ui@1.0.8
 underscore@1.0.4
 url@1.0.5

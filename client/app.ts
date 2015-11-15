@@ -7,7 +7,7 @@ export class App {
 
 	constructor() {
 		this.new_task = '';
-		this.hideCompleted = false;
+		// this.hideCompleted = false;
 		Tracker.autorun(() => {
 			let tasks: Task[] = []; 
 			if (Session.get("hideCompleted")) {
@@ -41,6 +41,5 @@ export class App {
 	onHideCompleted() {
 		// TODO: bug fix
 		Session.set("hideCompleted", !this.hideCompleted)
-		this.hideCompleted = !this.hideCompleted
 	}
 }
