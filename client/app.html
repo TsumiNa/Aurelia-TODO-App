@@ -3,17 +3,17 @@
     <header>
       <h1>Todo List</h1>
       <label class="hide-completed">
-        <input type="checkbox" checked.bind='hideCompleted' click.delegate='onHideCompleted()'/> Hide Completed Tasks
+        <input type="checkbox" checked.bind='hideCompleted' click.delegate='onHideCompleted()'> Hide Completed Tasks
       </label>
       <form class="new-task" submit.delegate='onSubmit()'>
         <input type="text" placeholder="Type to add new tasks" value.bind='new_task' />
       </form>
     </header>
-
+        <input type="checkbox" checked.bind='hideCompleted'>
     <ul>
       <li class="${task.checked? 'checked' : ''}" repeat.for='task of tasks'>
-        <button class="delete" click.delegate="onDelete(task)">&times;</button>
-        <input type="checkbox" checked.bind='task.checked' class="toggle-checked" click.delegate="onCheck(task)" />
+        <button class="delete" click.delegate="$parent.onDelete(task)">&times;</button>
+        <input type="checkbox" checked.bind='task.checked' class="toggle-checked" click.delegate="$parent.onCheck(task)" />
         <span class="text">${task.text}</span>
       </li>
     </ul>

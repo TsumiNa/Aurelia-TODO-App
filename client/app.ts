@@ -7,7 +7,8 @@ export class App {
 
 	constructor() {
 		this.new_task = '';
-		// this.hideCompleted = false;
+		this.hideCompleted = true;
+		Session.setDefault("hideCompleted", false);
 		Tracker.autorun(() => {
 			let tasks: Task[] = []; 
 			if (Session.get("hideCompleted")) {
@@ -38,8 +39,14 @@ export class App {
 		Tasks.remove(task._id);
 	}
 
+	onFake(){
+		console.log('Fake method call...')
+	}
+	
 	onHideCompleted() {
 		// TODO: bug fix
 		Session.set("hideCompleted", !this.hideCompleted)
+		//this.hideCompleted = !this.hideCompleted;
+		console.log(this.hideCompleted);
 	}
 }
