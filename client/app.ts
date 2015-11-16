@@ -4,10 +4,11 @@ export class App {
 	tasks: Task[];
 	new_task: string;
 	hideCompleted: boolean;
+	incompleteCount: number;
 
 	constructor() {
 		this.new_task = '';
-		this.hideCompleted = true;
+		this.hideCompleted = false;
 		Session.setDefault("hideCompleted", false);
 		Tracker.autorun(() => {
 			let tasks: Task[] = []; 
@@ -17,6 +18,7 @@ export class App {
 				tasks = Tasks.find({}, { sort: { createdAt: -1 } }).fetch();
 			}
 			this.tasks = tasks;
+			this.incompleteCount = Tasks.find({checked: {$ne: true}}).count();
 		})
 	}
 
@@ -33,20 +35,17 @@ export class App {
 		Tasks.update(task._id, {
 			$set: { checked: !task.checked }
 		});
+		return true;
 	}
 
 	onDelete(task: Task) {
 		Tasks.remove(task._id);
+		return true;
 	}
 
-	onFake(){
-		console.log('Fake method call...')
-	}
-	
 	onHideCompleted() {
-		// TODO: bug fix
 		Session.set("hideCompleted", !this.hideCompleted)
-		//this.hideCompleted = !this.hideCompleted;
-		console.log(this.hideCompleted);
+		this.hideCompleted = !this.hideCompleted;
+		return true;
 	}
 }
