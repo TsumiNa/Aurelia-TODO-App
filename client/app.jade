@@ -1,0 +1,14 @@
+template
+  .container
+    header
+      h1 Todo List (${incompleteCount})
+      label.hide-completed
+        input(type='checkbox', checked.one-way='hideCompleted', click.trigger='onHideCompleted()')
+        |  Hide Completed Tasks
+      form.new-task(submit.delegate='onSubmit()')
+        input(type='text', placeholder='Type to add new tasks', value.bind='new_task')
+    ul
+      li(class="${task.checked? 'checked' : ''}", repeat.for='task of tasks')
+        button.delete(click.delegate='onDelete(task)') ×
+        input.toggle-checked(type='checkbox', checked.one-way='task.checked', click.delegate='onCheck(task)')
+        span.text ${task.text}
