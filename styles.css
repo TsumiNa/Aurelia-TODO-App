@@ -124,3 +124,8 @@ header .hide-completed {
     padding-bottom: 5px;
   }
 }
+
+div>p.text {
+  font-size: 2em;
+  color: yellowgreen;
+}

@@ -1,0 +1,10 @@
+template
+	div
+		p.text
+			| classDeco: ${t1}
+		p.text
+			| propertyDeco: ${ t2 }
+		p.text
+			| t3 value: ${ t3 }
+	div
+		button(click.delegate='name()') click
