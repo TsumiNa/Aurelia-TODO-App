@@ -10,6 +10,14 @@ declare module 'aurelia-router' {
   * A step to be run during processing of the pipeline.
   */
   export interface PipelineStep {
+    
+    /**
+       * Execute the pipeline step. The step should invoke next(), next.complete(),
+       * next.cancel(), or next.reject() to allow the pipeline to continue.
+       *
+       * @param instruction The navigation instruction.
+       * @param next The next step in the pipeline.
+       */
     run(instruction: NavigationInstruction, next: Function): void;
   }
   
@@ -65,14 +73,15 @@ declare module 'aurelia-router' {
       * The function is passed the current [[NavigationInstruction]], and should configure
       * instruction.config with the desired moduleId, viewPorts, or redirect.
       */
-    // navigationStrategy?: (instruction:NavigationInstruction) => Promise<void>|void;
+    navigationStrategy?: (instruction: NavigationInstruction) => Promise<void> | void;
+    
     /**
       * The view ports to target when activating this route. If unspecified, the target moduleId is loaded
       * into the default viewPort (the viewPort with name 'default'). The viewPorts object should have keys
       * whose property names correspond to names used by <router-view> elements. The values should be objects
       * specifying the moduleId to load into that viewPort.
       */
-    viewPorts?: Object;
+    viewPorts?: any;
     
     /**
       * When specified, this route will be included in the [[Router.navigation]] nav model. Useful for
@@ -163,17 +172,17 @@ declare module 'aurelia-router' {
     /**
       * Parameters extracted from the route pattern.
       */
-    params: Object;
+    params: any;
     
     /**
       * Parameters extracted from the query string.
       */
-    queryParams: Object;
+    queryParams: any;
     
     /**
       * The route config for the route matching this instruction.
       */
-    config: Object;
+    config: RouteConfig;
     
     /**
       * The parent instruction, if this instruction was created by a child router.
@@ -188,7 +197,7 @@ declare module 'aurelia-router' {
     /**
       * viewPort instructions to used activation.
       */
-    viewPortInstructions: Object;
+    viewPortInstructions: any;
     plan: Object;
     constructor(init: NavigationInstructionInit);
     
@@ -206,7 +215,7 @@ declare module 'aurelia-router' {
     /**
       * Adds a viewPort instruction.
       */
-    addViewPortInstruction(viewPortName: string, strategy: string, moduleId: string, component: any): Object;
+    addViewPortInstruction(viewPortName: string, strategy: string, moduleId: string, component: any): any;
     
     /**
       * Gets the name of the route pattern's wildcard parameter, if applicable.
@@ -258,8 +267,8 @@ declare module 'aurelia-router' {
     /**
       * The route config.
       */
-    config: Object;
-    constructor(router: any, relativeHref: any);
+    config: RouteConfig;
+    constructor(router: Router, relativeHref: string);
     
     /**
       * Sets the route's title and updates document.title.
@@ -283,7 +292,7 @@ declare module 'aurelia-router' {
   * Used during the activation lifecycle to cause a redirect.
   */
   export class Redirect {
-    constructor(url: string, options?: Object);
+    constructor(url: string, options?: any);
     
     /**
       * Called by the activation system to set the child router.
@@ -308,7 +317,7 @@ declare module 'aurelia-router' {
   export class RouterConfiguration {
     instructions: any;
     options: any;
-    pipelineSteps: Array<Object>;
+    pipelineSteps: Array<Function | PipelineStep>;
     title: string;
     unknownRouteConfig: any;
     
@@ -319,7 +328,7 @@ declare module 'aurelia-router' {
       * @param step The pipeline step.
       * @chainable
       */
-    addPipelineStep(name: string, step: Object | Function): RouterConfiguration;
+    addPipelineStep(name: string, step: Function | PipelineStep): RouterConfiguration;
     
     /**
       * Maps one or more routes to be registered with the router.
@@ -344,7 +353,7 @@ declare module 'aurelia-router' {
       *  [[NavigationInstruction]] and selects a moduleId to load.
       * @chainable
       */
-    mapUnknownRoutes(config: string | RouteConfig | ((instruction: NavigationInstruction) => void | Promise<void>)): RouterConfiguration;
+    mapUnknownRoutes(config: string | RouteConfig | ((instruction: NavigationInstruction) => string | RouteConfig | Promise<string | RouteConfig>)): RouterConfiguration;
     
     /**
       * Applies the current configuration to the specified [[Router]].
@@ -421,7 +430,7 @@ declare module 'aurelia-router' {
       * @param viewPort The viewPort.
       * @param name The name of the viewPort. 'default' if unspecified.
       */
-    registerViewPort(viewPort: Object, name?: string): void;
+    registerViewPort(viewPort: any, name?: string): void;
     
     /**
       * Returns a Promise that resolves when the router is configured.
@@ -441,7 +450,7 @@ declare module 'aurelia-router' {
       * @param fragment The URL fragment to use as the navigation destination.
       * @param options The navigation options.
       */
-    navigate(fragment: string, options?: Object): boolean;
+    navigate(fragment: string, options?: any): boolean;
     
     /**
       * Navigates to a new location corresponding to the route and params specified. Equivallent to [[Router.generate]] followed
@@ -451,7 +460,7 @@ declare module 'aurelia-router' {
       * @param params The route parameters to be used when populating the route pattern.
       * @param options The navigation options.
       */
-    navigateToRoute(route: string, params?: Object, options?: Object): boolean;
+    navigateToRoute(route: string, params?: any, options?: any): boolean;
     
     /**
       * Navigates back to the most recent location in history.
@@ -473,7 +482,7 @@ declare module 'aurelia-router' {
       * @param params The route params to be used to populate the route pattern.
       * @returns {string} A string containing the generated URL fragment.
       */
-    generate(name: string, params?: Object): string;
+    generate(name: string, params?: any): string;
     
     /**
       * Creates a [[NavModel]] for the specified route config.
@@ -576,7 +585,7 @@ declare module 'aurelia-router' {
       * @param viewPort The viewPort.
       * @param name The name of the viewPort. 'default' if unspecified.
       */
-    registerViewPort(viewPort: Object, name: string): Promise<any>;
+    registerViewPort(viewPort: any, name: string): Promise<any>;
     
     /**
       * Activates the router. This instructs the router to begin listening for history changes and processing instructions.
