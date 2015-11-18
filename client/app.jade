@@ -3,7 +3,7 @@ template
     header
       h1 Todo List (${incompleteCount})
       label.hide-completed
-        input(type='checkbox', checked.one-way='hideCompleted', click.trigger='onHideCompleted()')
+        input(type='checkbox', checked.one-way='hideCompleted', click.delegate='onHideCompleted()')
         |  Hide Completed Tasks
       form.new-task(submit.delegate='onSubmit()')
         input(type='text', placeholder='Type to add new tasks', value.bind='new_task')
