@@ -2,13 +2,9 @@ import { classDeco, propertyDeco } from './decorator';
 
 @classDeco
 export class Test {
+	t1: string;
 	t3: string;
-	t2: string = this.dd;
-	
-	@propertyDeco
-	get dd() {
-		return 't2';
-	}
+	@propertyDeco t2: string;
 	
 	constructor(){
 		this.t3 = 't3 gogogo';

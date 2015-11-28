@@ -15,12 +15,18 @@ classDeco = function(target: Function): Function {
 
 
 export let propertyDeco: PropertyDecorator;
-propertyDeco = function(target: Object, name: string | symbol, descriptor?: PropertyDescriptor): any {
+propertyDeco = function(target: Object, name: string | symbol): any {
+	console.log(target, name)
 	let t2 = "I'm PropertyDecorator";
+	let descriptor = {
+		get: undefined,
+		set: undefined,
+		enumerable: true,
+		configurable: true
+	};
 	descriptor.get = function() { return t2 };
 	descriptor.set = function(val) { t2 = val };
-	delete descriptor.value;
-	delete descriptor.writable;
-	console.log(name, descriptor)
+	target[name] = t2;
+	// Object.defineProperty(target, name, descriptor);
 	// return descriptor;
 }
