@@ -27,6 +27,7 @@ propertyDeco = function(target: Object, name: string | symbol): any {
 	descriptor.get = function() { return t2 };
 	descriptor.set = function(val) { t2 = val };
 	target[name] = t2;
+	target['_extraId'] = '1111111';
 	// Object.defineProperty(target, name, descriptor);
 	// return descriptor;
 }
